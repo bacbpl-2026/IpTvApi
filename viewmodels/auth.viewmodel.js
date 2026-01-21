@@ -2,12 +2,13 @@ const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-exports.register = async (email, password) => {
+exports.register = async (email, password, name) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = new User({
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    name: name
   });
 
   return await user.save();
