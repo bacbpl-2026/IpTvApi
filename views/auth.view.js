@@ -19,3 +19,11 @@ exports.login = async (req, res) => {
     res.status(401).json({ error: err.message });
   }
 };
+
+
+exports.profile = async (req, res) => {
+  res.json({
+    message: "Protected data",
+    user: req.user
+  });
+};
