@@ -1,13 +1,40 @@
-const axios = require("axios");
-const cryptoUtil = require("../utils/watchoCrypto");
+// const axios = require("axios");
+// const cryptoUtil = require("../utils/watchoCrypto");
 
-const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne";
-const SECRET_KEY = "W@!0$2s5v8y/B?E(H+Kb";
+// const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne";
+// const SECRET_KEY = "W@!0$2s5v8y/B?E(H+Kb";
 
-const AUTH_USER = "160";
-const AUTH_PASS = "bH@reer!$#2345";
-const ENTITY_ID = "10950334";
+// const AUTH_USER = "160";
+// const AUTH_PASS = "bH@reer!$#2345";
+// const ENTITY_ID = "10950334";
 
+// // exports.getSubscriptionPlans = async () => {
+// //   const payload = {
+// //     OTTSubscriberID: "-1",
+// //     UserID: "10950334",
+// //     UserType: "DS",
+// //     Source: "IS"
+// //   };
+
+// //   const encrypted = cryptoUtil.encrypt(payload, SECRET_KEY);
+
+// //   const response = await axios.post(
+// //     `${BASE_URL}/SubscriptionPlanDetails`,
+// //     { InputData: encrypted },
+// //     {
+// //       headers: {
+// //         "Content-Type": "application/json",
+// //         "EntityID": ENTITY_ID,
+// //         "Authorization":
+// //           "Basic " +
+// //           Buffer.from(`${AUTH_USER}:${AUTH_PASS}`).toString("base64")
+// //       },
+// //       timeout: 15000
+// //     }
+// //   );
+
+// //   return cryptoUtil.decrypt(response.data, SECRET_KEY);
+// // };
 // exports.getSubscriptionPlans = async () => {
 //   const payload = {
 //     OTTSubscriberID: "-1",
@@ -19,22 +46,33 @@ const ENTITY_ID = "10950334";
 //   const encrypted = cryptoUtil.encrypt(payload, SECRET_KEY);
 
 //   const response = await axios.post(
-//     `${BASE_URL}/SubscriptionPlanDetails`,
+//     "https://publicapis.dishtv.in/api/WatchoOne/SubscriptionPlanDetails",
 //     { InputData: encrypted },
 //     {
 //       headers: {
 //         "Content-Type": "application/json",
 //         "EntityID": ENTITY_ID,
 //         "Authorization":
-//           "Basic " +
-//           Buffer.from(`${AUTH_USER}:${AUTH_PASS}`).toString("base64")
+//           "Basic " + Buffer.from(`${AUTH_USER}:${AUTH_PASS}`).toString("base64")
 //       },
 //       timeout: 15000
 //     }
 //   );
 
-//   return cryptoUtil.decrypt(response.data, SECRET_KEY);
+//   // ✅ RETURN DIRECTLY
+//   return response.data;
 // };
+
+const axios = require("axios");
+const cryptoUtil = require("../utils/watchoCrypto");
+
+const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne";
+const SECRET_KEY = "W@!0$2s5v8y/B?E(H+Kb";
+
+const AUTH_USER = "160";
+const AUTH_PASS = "bH@reer!$#2345";
+const ENTITY_ID = "10950334";
+
 exports.getSubscriptionPlans = async () => {
   const payload = {
     OTTSubscriberID: "-1",
@@ -46,11 +84,12 @@ exports.getSubscriptionPlans = async () => {
   const encrypted = cryptoUtil.encrypt(payload, SECRET_KEY);
 
   const response = await axios.post(
-    "https://publicapis.dishtv.in/api/WatchoOne/SubscriptionPlanDetails",
+    `${BASE_URL}/SubscriptionPlanDetails`,
     { InputData: encrypted },
     {
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "EntityID": ENTITY_ID,
         "Authorization":
           "Basic " + Buffer.from(`${AUTH_USER}:${AUTH_PASS}`).toString("base64")
@@ -59,6 +98,7 @@ exports.getSubscriptionPlans = async () => {
     }
   );
 
-  // ✅ RETURN DIRECTLY
-  return response.data;
+  // API returns encrypted response
+  return cryptoUtil.decrypt(response.data, SECRET_KEY);
 };
+
