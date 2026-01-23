@@ -1,6 +1,8 @@
 const axios = require("axios");
-const { BASE_URL, SECRET_KEY } = require("../config/watcho.config");
 const cryptoUtil = require("../utils/watchoCrypto");
+
+const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne/SubscriptionPlanDetails";
+const SECRET_KEY = "W@!0$2s5v8y/B?E(H+Kb";
 
 const AUTH_USER = "160";
 const AUTH_PASS = "bH@reer!$#2345";
@@ -26,10 +28,10 @@ exports.getSubscriptionPlans = async () => {
         "Authorization":
           "Basic " +
           Buffer.from(`${AUTH_USER}:${AUTH_PASS}`).toString("base64")
-      }
+      },
+      timeout: 15000
     }
   );
 
-  // Watcho sends encrypted response as STRING
   return cryptoUtil.decrypt(response.data, SECRET_KEY);
 };
