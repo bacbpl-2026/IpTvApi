@@ -1,7 +1,7 @@
 const axios = require("axios");
 const cryptoUtil = require("../utils/watchoCrypto");
 
-const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne/SubscriptionPlanDetails";
+const BASE_URL = "https://publicapis.dishtv.in/api/WatchoOne";
 const SECRET_KEY = "W@!0$2s5v8y/B?E(H+Kb";
 
 const AUTH_USER = "160";
