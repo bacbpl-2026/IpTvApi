@@ -8,6 +8,7 @@ connectDB();
 app.use(express.json());
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/", require("./routes/user.routes"));
+app.use("/api/watcho", require("./routes/watcho.routes"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
